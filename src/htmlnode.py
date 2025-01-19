@@ -24,11 +24,19 @@ class HTMLNode:
     
 class LeafNode(HTMLNode):
     def __init__(self, tag, value, props=None):
-        super().__init__(tag, value, props)
+        super().__init__(tag=tag, value=value, props=props)
 
     def to_html(self):
         if self.value == None:
             raise ValueError
         if self.tag == None:
             return self.value
-        pass
+        if self.props == None:
+            return f'<{self.tag}>{self.value}</{self.tag}>'
+        return f'<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>'
+    
+    def __eq__(self, other):
+        return super().__eq__(other)
+    
+    def __repr__(self):
+        return f'LeafNode({self.tag}, {self.value}, {self.props})'

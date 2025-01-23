@@ -38,9 +38,6 @@ class LeafNode(HTMLNode):
             return f'<{self.tag}>{self.value}</{self.tag}>'
         return f'<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>'
     
-    def __eq__(self, other):
-        return super().__eq__(other)
-    
     def __repr__(self):
         return f'LeafNode({self.tag}, {self.value}, {self.props})'
 

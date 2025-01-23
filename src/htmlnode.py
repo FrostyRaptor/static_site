@@ -6,9 +6,12 @@ class HTMLNode:
         self.props = props
 
     def to_html(self):
-        raise NotImplementedError
+        raise NotImplementedError("Command doesn't exist")
     
     def props_to_html(self):
+        if self.props is None:
+            return ""
+        
         string = ""
 
         for key in self.props:
@@ -28,7 +31,7 @@ class LeafNode(HTMLNode):
 
     def to_html(self):
         if self.value == None:
-            raise ValueError
+            raise ValueError("LeafNode doesn't have a value")
         if self.tag == None:
             return self.value
         if self.props == None:
@@ -40,3 +43,20 @@ class LeafNode(HTMLNode):
     
     def __repr__(self):
         return f'LeafNode({self.tag}, {self.value}, {self.props})'
+
+class ParentNode(HTMLNode):
+    def __init__(self, tag, children, props=None):
+        super().__init__(tag=tag, children=children, props=props)
+
+    def to_html(self):
+        if self.tag == None:
+            raise ValueError("ParentNode doesn't have a tag")
+        if self.children == None:
+            raise ValueError("ParentNode doesn't have children")
+        text = ""
+        for child in self.children:
+            text += child.to_html()
+        return f"<{self.tag}{self.props_to_html()}>{text}</{self.tag}>"
+    
+    def __repr__(self):
+        return f"ParentNode({self.tag}, {self.children}, {self.props})"

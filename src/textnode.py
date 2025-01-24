@@ -1,6 +1,7 @@
 from enum import Enum
 
 from htmlnode import LeafNode
+from extract_markdown import extract_markdown_images, extract_markdown_links
 
 class TextType(Enum):
     TEXT = "text"
@@ -51,3 +52,18 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             text_node_lst.append(TextNode(tmp[index], TextType.TEXT))
 
     return text_node_lst
+
+def split_nodes_image(old_nodes):
+    new_nodes_lst = []
+
+    for node in old_nodes:
+        matches =  extract_markdown_images(node.text)
+
+    return new_nodes_lst
+
+def split_nodes_link(old_nodes):
+    new_nodes_lst = []
+
+
+
+    return new_nodes_lst
